@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server'
 import User from "@/src/models/User";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const requestJson = await request.nextUrl.searchParams
   const data = {
     message: 'Hello World'
