@@ -1,11 +1,17 @@
 "use client"
 
 export default function Signup() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
     const data = new FormData(event.target)
-    const value = Object.fromEntries(data.entries())
-    console.log(value)
+    const { email, password} = Object.fromEntries(data.entries())
+    const response = await fetch('/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    const { user } = await response.json()
+    console.log(user)
   }
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

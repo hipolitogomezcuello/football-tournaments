@@ -6,6 +6,20 @@ class User extends Model {
   id!: string;
   email!: string;
   password!: string;
+
+  static async login(email: string, password: string): Promise<User> {
+    const user = await this.findOne({
+      where: {
+        email
+      }
+    })
+    if (user) {
+      if (bcrypt.compareSync(password, user.password)) {
+        return user
+      }
+    }
+    throw Error('incorrect email or password')
+  }
 }
 
 User.init({
