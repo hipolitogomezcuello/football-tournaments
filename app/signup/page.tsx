@@ -1,10 +1,26 @@
 "use client"
 
+import Grid from "@mui/system/Unstable_Grid";
+import {Button, Container, Paper, TextField, Typography} from "@mui/material";
+import {useState} from "react";
+import HeaderNavigationBar from "@/src/components/HeaderNavigatorBar";
+
 export default function Signup() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
   const handleSubmit = async (event: any) => {
     event.preventDefault()
-    const data = new FormData(event.target)
-    const { email, password} = Object.fromEntries(data.entries())
+    console.log('Logging in with: ', email, password)
     const response = await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -14,20 +30,47 @@ export default function Signup() {
     console.log(user)
   }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div  className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Email:
-            <input type="text" name="email" />
-          </label>
-          <label>
-            Password:
-            <input type="text" name="password" />
-          </label>
-          <input type="submit" value="Sign Up" />
-        </form>
-      </div>
+    <main>
+      <HeaderNavigationBar/>
+      <Grid container spacing={2}>
+        <Grid xs={12}>
+          <Container maxWidth="xs">
+            <Paper elevation={3} style={{ padding: '20px', margin: '100px 0px' }}>
+              <Typography variant="h4" align="center" gutterBottom>
+                Sign Up
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  type="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  style={{ marginTop: '10px' }}
+                >
+                  Login
+                </Button>
+              </form>
+            </Paper>
+          </Container>
+        </Grid>
+      </Grid>
     </main>
   )
 }

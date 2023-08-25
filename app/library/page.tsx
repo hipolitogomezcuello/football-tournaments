@@ -11,12 +11,16 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/api/competitions')
+      const response = await fetch('/api/library')
       const data = await response.json()
       setCompetitions(data)
     }
     fetchData()
   }, []);
+
+  const handleRemove = (competitionId: number) => {
+    setCompetitions(competitions.filter((competition: Competition) => competition.id !== competitionId))
+  }
 
   return (
     <main>
@@ -24,7 +28,7 @@ export default function Home() {
       {competitions.length > 0 ? (
         competitions.map((competition: Competition) => (
           <div key={competition.id}>
-            <CompetitionInfo competition={competition} type={"add"}/>
+            <CompetitionInfo competition={competition} type={"remove"} onRemove={handleRemove}/>
           </div>
         ))
       ) : null}

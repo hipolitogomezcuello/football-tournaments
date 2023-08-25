@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 function createToken (id: string): string {
-  return jwt.sign({ id }, "pls remember to send to envs" as string, { //TODO set as env
+  return jwt.sign({ id }, process.env.JWT_SECRET || '', {
     expiresIn: 60 * 60 * 24 * 7,
   })
 }

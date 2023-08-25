@@ -1,27 +1,82 @@
 "use client"
 
+import {useState} from "react";
+import Grid from "@mui/system/Unstable_Grid";
+import {Button, Container, Paper, TextField, Typography} from "@mui/material";
+import {redirect, useRouter} from "next/navigation";
+import HeaderNavigationBar from "@/src/components/HeaderNavigatorBar";
+
 export default function Login() {
-  const handleSubmit = (event: any) => {
-    event.preventDefault()
-    const data = new FormData(event.target)
-    const value = Object.fromEntries(data.entries())
-    console.log(value)
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { push } = useRouter()
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = async (event: any) => {
+    try {
+      event.preventDefault()
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, password})
+      })
+      const user = await response.json()
+      localStorage.setItem('username', user.email)
+      push('/')
+    } catch (e) {
+      console.error(e)
+    }
   }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div  className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Email:
-            <input type="text" name="email" />
-          </label>
-          <label>
-            Password:
-            <input type="text" name="password" />
-          </label>
-          <input type="submit" value="Log In" />
-        </form>
-      </div>
+    <main>
+      <HeaderNavigationBar/>
+      <Grid container spacing={2}>
+        <Grid xs={12}>
+          <Container maxWidth="xs">
+            <Paper elevation={3} style={{ padding: '20px', margin: '100px 0px' }}>
+              <Typography variant="h4" align="center" gutterBottom>
+                Log In
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <TextField
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+                <TextField
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  margin="normal"
+                  type="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  style={{ marginTop: '10px' }}
+                >
+                  Login
+                </Button>
+              </form>
+            </Paper>
+          </Container>
+        </Grid>
+      </Grid>
     </main>
   )
 }
