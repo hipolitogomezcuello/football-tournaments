@@ -1,5 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import {Match} from "@/src/types/Football";
+import {Properties} from "csstype";
 
 const cardStyle = {
   display: 'flex',
@@ -22,7 +24,7 @@ const scoresStyle = {
   marginRight: '16px',
 };
 
-const getWinner = (match) => {
+const getWinner = (match: Match) => {
   if (match.score.winner === 'HOME_TEAM') {
     return match.homeTeam.shortName;
   } else if (match.score.winner === 'AWAY_TEAM') {
@@ -32,7 +34,7 @@ const getWinner = (match) => {
   }
 }
 
-const MatchCard = ({ match }) => {
+const MatchCard = ({ match }: { match: Match}) => {
   return (
     <Card style={cardStyle}>
       <CardMedia style={mediaStyle} image={match.homeTeam.crest} title={match.homeTeam.name} />
@@ -41,7 +43,7 @@ const MatchCard = ({ match }) => {
           {match.homeTeam.shortName} vs {match.awayTeam.shortName}
         </Typography>
         <Typography variant="body2">{new Date(match.utcDate).toLocaleString()}</Typography>
-        <div style={scoresStyle}>
+        <div style={scoresStyle as Properties}>
           <Typography variant="h6">
             {match.score.fullTime.home} - {match.score.fullTime.away}
           </Typography>

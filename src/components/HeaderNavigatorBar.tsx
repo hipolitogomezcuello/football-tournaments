@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {AppBar, Toolbar, Button, Container} from '@mui/material';
 import {useRouter} from "next/navigation";
+import {Properties} from "csstype";
 
 const styles = {
   leftHeaders: {
@@ -37,10 +38,10 @@ const HeaderNavigationBar = () => {
               Browse
             </Button>
           </div>
-          <div style={styles.middleHeaders}>
+          <div style={styles.middleHeaders as Properties}>
             {username !== '' ? `Welcome ${username}` : null}
           </div>
-          <div style={styles.rightHeaders}>
+          <div style={styles.rightHeaders as Properties}>
             <Button onClick={() => push('/login')} color="inherit">
               Log In
             </Button>

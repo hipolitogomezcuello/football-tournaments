@@ -3,6 +3,7 @@ import {Button, Card, CardContent, CardMedia, Typography} from '@mui/material';
 import {Competition} from "@/src/types/Football";
 import MatchCard from "@/src/components/MatchCard";
 import Grid2 from "@mui/material/Unstable_Grid2";
+import {Properties} from "csstype";
 
 const cardMediaStyle = {
   width: 120,
@@ -80,7 +81,7 @@ const CompetitionInfo = ({competition, type, onRemove}: {
   return (
     <Card style={{display: 'flex', marginBottom: '16px', width: '100%'}}>
       <CardMedia style={cardMediaStyle} image={competition.emblem} title={competition.name}/>
-      <CardContent style={cardContentStyle}>
+      <CardContent style={cardContentStyle as Properties}>
         <Typography variant="h6">{competition.name}</Typography>
         <Typography variant="body1">Current Season: {competition.currentSeason.id}</Typography>
         <Typography variant="body1">Current Matchday: {competition.currentSeason.currentMatchday}</Typography>

@@ -12,11 +12,11 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const { push } = useRouter()
 
-  const handleEmailChange = (event) => {
+  const handleEmailChange = (event: any) => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event: any) => {
     setPassword(event.target.value);
   };
 
